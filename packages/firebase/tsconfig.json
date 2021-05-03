@@ -1,0 +1,7 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist"
+  },
+  "include": ["firestore/**/*.ts", "functions/**/*.ts", "storage/**/*.ts"]
+}
