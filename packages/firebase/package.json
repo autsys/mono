@@ -1,0 +1,26 @@
+{
+  "name": "@autsys/firebase",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {
+    "build": "run-p build:*",
+    "build:main": "tsc -p tsconfig.json",
+    "build:pkg": "cpx package.json dist",
+    "test": "run-s build test:*",
+    "test:lint": "eslint src --ext .ts",
+    "test:prettier": "prettier \"src/**/*.ts\" --list-different",
+    "test:spelling": "cspell \"{README.md,.github/*.md,src/**/*.ts}\"",
+    "test:unit": "nyc --silent ava",
+    "watch:build": "tsc -p tsconfig.json -w",
+    "watch:test": "nyc --silent ava --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "whatwg-url": "^8.5.0"
+  },
+  "devDependencies": {
+    "@types/whatwg-url": "^8.2.0"
+  }
+}
