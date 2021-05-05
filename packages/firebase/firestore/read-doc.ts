@@ -11,3 +11,5 @@ export async function read(
   const data = doc.data();
   return data;
 }
+
+export default read;

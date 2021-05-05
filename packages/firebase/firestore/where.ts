@@ -6,25 +6,25 @@ import firebase from 'firebase/app';
  * @returns {Object|null} Object with results {docId: docData} or null
  * https://firebase.google.com/docs/firestore/query-data/queries#simple_queries
  */
-export default function where(
+export default async function where(
   ref: firebase.firestore.CollectionReference,
-  query: [
+  query: readonly [
     string | firebase.firestore.FieldPath,
     firebase.firestore.WhereFilterOp,
-    any
+    unknown
   ]
-) {
-  return ref
-    .where(...query)
-    .get()
-    .then(handleSuccess);
+): Promise<Record<string, unknown> | null> {
+  const querySnapshot = await ref.where(...query).get();
+  return handleSuccess(querySnapshot);
 }
 
 function handleSuccess(querySnapshot: firebase.firestore.QuerySnapshot) {
-  const result: Record<string, unknown> = {};
-  querySnapshot.forEach(function (doc) {
-    const data = doc.data();
-    result[doc.id] = data;
-  });
+  const result: Record<string, unknown> = querySnapshot.docs.reduce(
+    (o, data) => {
+      const { id, ...rest } = data;
+      return { ...o, [id]: { rest } };
+    },
+    {}
+  );
   return Object.entries(result).length > 0 ? result : null;
 }

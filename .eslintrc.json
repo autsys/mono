@@ -10,7 +10,7 @@
     "plugin:eslint-comments/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
-    "plugin:functional/recommended",
+    // "plugin:functional/recommended",
     "prettier",
     "prettier/@typescript-eslint"
   ],
