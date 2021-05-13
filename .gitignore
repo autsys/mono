@@ -8,7 +8,3 @@ src/**.js
 coverage
 *.log
 yarn.lock
-
-##Submodules
-packages/firebase-hooks
-packages/hooks
