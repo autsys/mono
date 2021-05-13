@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "scripts": {
-    "build": "run-p build:*",
+    "build": "run-s build:*",
+    "build:clean": "rimraf dist",
+    "build:copy": "cpx package.json dist",
     "build:main": "tsc -p tsconfig.json",
-    "build:pkg": "cpx package.json dist",
+    "build:pkg": "cd dist npm pack",
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
