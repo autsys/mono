@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "run-s build:*",
-    "build:clean": "rimraf dist",
+    "build:clean": "",
     "build:copy": "cpx package.json dist",
     "build:tsc": "tsc"
   },
