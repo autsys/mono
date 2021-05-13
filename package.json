@@ -12,7 +12,8 @@
     ]
   },
   "scripts": {
-    "build": "npm run build --workspaces"
+    "build": "npm run build --workspaces",
+    "build:hooks": "npm run build -w @autsys/hooks"
   },
   "engines": {
     "node": ">=10"
