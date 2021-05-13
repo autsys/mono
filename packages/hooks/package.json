@@ -7,7 +7,7 @@
     "build:clean": "rimraf dist",
     "build:copy": "cpx package.json dist",
     "build:tsc": "tsc",
-    "ci:build": "run-s build:tsc build:copy"
+    "ci:build": "npm run build:tsc"
   },
   "repository": {
     "type": "git",
