@@ -12,10 +12,11 @@
     ]
   },
   "scripts": {
-    "build:hooks": "npm run build -w @autsys/hooks"
+    "build:hooks": "npm run build:ci -w @autsys/hooks"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=10",
+    "npm": ">=7"
   },
   "devDependencies": {
     "@types/node": "^14.14.37",

@@ -2,15 +2,12 @@
   "name": "@autsys/hooks",
   "version": "0.0.2",
   "description": "Commonly used hooks",
-  "engines": {
-    "node": ">=10",
-    "npm": ">=6"
-  },
   "scripts": {
-    "build": "tsc",
-    "build:clean": "",
+    "build": "run-s build:*",
+    "build:clean": "rimraf dist",
     "build:copy": "cpx package.json dist",
-    "build:tsc": "tsc"
+    "build:tsc": "tsc",
+    "ci:build": "run-s build:tsc build:copy"
   },
   "repository": {
     "type": "git",
