@@ -19,7 +19,7 @@ jobs:
         run: npm install --ignore-scripts
       - name: Build
         run: npm run build:hooks
-      # - name: Publish
-      #   run: npm publish packages/hooks/dist
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish
+        run: npm publish packages/hooks/dist
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
