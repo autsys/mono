@@ -13,7 +13,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: "12"
+          node-version: "15"
           registry-url: "https://npm.pkg.github.com"
       - name: Install dependencies
         run: npm install --ignore-scripts
