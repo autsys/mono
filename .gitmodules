@@ -1,3 +1,0 @@
-[submodule "packages/firebase-hooks"]
-	path = packages/firebase-hooks
-	url = https://github.com/autsys/firebase-hooks
