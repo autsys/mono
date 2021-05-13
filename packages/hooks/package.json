@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/autsys/hooks.git"
+    "url": "git+https://github.com/autsys/mono.git"
   },
   "keywords": [
     "hooks",
@@ -19,10 +19,6 @@
   ],
   "author": "jheyer159",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/autsys/hooks/issues"
-  },
-  "homepage": "https://github.com/autsys/hooks#readme",
   "peerDependencies": {
     "react": ">=16.12"
   }
