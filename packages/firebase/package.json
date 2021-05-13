@@ -1,13 +1,15 @@
 {
   "name": "@autsys/firebase",
-  "version": "0.1.0",
+  "version": "0.0.4",
   "description": "",
   "scripts": {
     "build": "run-s build:*",
     "build:clean": "rimraf dist",
     "build:copy": "cpx package.json dist",
     "build:main": "tsc -p tsconfig.json",
-    "build:pkg": "cd dist npm pack",
+    "build:pkg": "cd dist && npm pack",
+    "ci:build": "tsc && cpx package.json dist",
+    "publish": "npm publish dist",
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",

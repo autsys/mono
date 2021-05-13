@@ -18,8 +18,8 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
       - name: Build
-        run: npm run build:hooks
+        run: npm run ci:build -ws
       - name: Publish
-        run: npm publish packages/hooks/dist
+        run: npm publish -ws
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
