@@ -7,6 +7,8 @@ jobs:
   build:
     name: Build and Publish
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v2
@@ -18,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
       - name: Build
-        run: npm run ci:build -ws
-      - name: Publish
-        run: npm publish -ws
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run build -ws
+      - name: Publish Hooks
+        run: npm publish packages/hooks/dist
+      - name: Publish Firebase
+        run: npm publish packages/firebase/dist
