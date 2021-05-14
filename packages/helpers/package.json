@@ -1,7 +1,7 @@
 {
-  "name": "@autsys/hooks",
-  "version": "0.0.2",
-  "description": "Commonly used hooks",
+  "name": "@autsys/helpers",
+  "version": "0.0.1",
+  "description": "Helper functions for various tasks",
   "scripts": {
     "build": "tsc"
   },
@@ -9,13 +9,10 @@
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"
   },
-  "keywords": [
-    "hooks",
-    "autsys"
-  ],
+  "keywords": [],
   "author": "jheyer159",
   "license": "ISC",
-  "peerDependencies": {
-    "react": ">=16.12"
+  "dependencies": {
+    "ext-name": "^5.0.0"
   }
 }

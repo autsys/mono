@@ -1,7 +1,7 @@
 {
-  "name": "@autsys/hooks",
+  "name": "@autsys/firebase-hooks",
   "version": "0.0.2",
-  "description": "Commonly used hooks",
+  "description": "Firebase hooks that are used with @autsys/firebase functions.",
   "scripts": {
     "build": "tsc"
   },
@@ -9,13 +9,13 @@
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"
   },
-  "keywords": [
-    "hooks",
-    "autsys"
-  ],
+  "keywords": ["firebase", "hooks"],
   "author": "jheyer159",
   "license": "ISC",
   "peerDependencies": {
     "react": ">=16.12"
+  },
+  "dependencies": {
+    "use-deep-compare-effect": "^1.3.1"
   }
 }

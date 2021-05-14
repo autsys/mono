@@ -1,11 +1,7 @@
-.idea/*
-.nyc_output
-dist
-build
 node_modules
-test
-src/**.js
-coverage
+dist
 *.log
-yarn.lock
 tsconfig.tsbuildinfo
+*.js
+*.d.ts
+

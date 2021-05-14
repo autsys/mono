@@ -1,3 +1,3 @@
 # @autsys/firebase
 
-a typescript-starter project
+Autsys mono-repository containing public packages

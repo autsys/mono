@@ -20,8 +20,8 @@ jobs:
       - name: Install dependencies
         run: npm install --ignore-scripts
       - name: Build
-        run: npm run ci:build -ws
-      - name: Publish Hooks
-        run: npm publish packages/hooks/dist
-      - name: Publish Firebase
-        run: npm publish packages/firebase/dist
+        run: npm run build
+      # - name: Publish Hooks
+      #   run: npm publish packages/hooks/dist
+      # - name: Publish Firebase
+      #   run: npm publish packages/firebase/dist

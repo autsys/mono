@@ -1,0 +1,23 @@
+{
+  "name": "@autsys/firebase-functions",
+  "version": "0.0.3",
+  "description": "Utility functions for Firebase Functions environment",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/autsys/mono.git"
+  },
+  "keywords": [
+    "firebase",
+    "functions",
+    "email",
+    "user"
+  ],
+  "author": "Jeremy Heyer",
+  "license": "ISC",
+  "peerDependencies": {
+    "firebase-functions": "^3.6.0"
+  }
+}
