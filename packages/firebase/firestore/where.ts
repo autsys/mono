@@ -13,7 +13,7 @@ export default function where(
     firebase.firestore.WhereFilterOp,
     unknown
   ]
-): Promise<Record<string, unknown> | null> {
+): Promise<Record<string, Record<string, unknown>> | null> {
   return ref
     .where(...query)
     .get()
@@ -21,7 +21,7 @@ export default function where(
 }
 
 function handleSuccess(querySnapshot: firebase.firestore.QuerySnapshot) {
-  const result: Record<string, unknown> = {};
+  const result: Record<string, Record<string, unknown>> = {};
   querySnapshot.forEach(function (doc) {
     const data = doc.data();
     result[doc.id] = data;
