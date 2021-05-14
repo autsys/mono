@@ -6,7 +6,7 @@ import firebase from "firebase/app";
 export async function call(
   functions: firebase.functions.Functions,
   name: string,
-  data: unknown,
+  data?: unknown,
   options?: firebase.functions.HttpsCallableOptions
 ): Promise<firebase.functions.HttpsCallableResult> {
   const callable = functions.httpsCallable(name, options);

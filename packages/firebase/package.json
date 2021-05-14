@@ -3,8 +3,9 @@
   "version": "0.0.4",
   "description": "Commonly used Firebase functionality",
   "scripts": {
-    "build": "tsc"
+    "prepack": "tsc"
   },
+  "files": ["**/*.js", "**/*.d.ts", "!**/__tests__/**"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"

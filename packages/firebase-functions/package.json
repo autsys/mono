@@ -3,8 +3,9 @@
   "version": "0.0.3",
   "description": "Utility functions for Firebase Functions environment",
   "scripts": {
-    "build": "tsc"
+    "prepack": "tsc"
   },
+  "files": ["**/*.js", "**/*.d.ts"],
   "repository": {
     "type": "git",
     "url": "git://github.com/autsys/mono.git"
