@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
  * Subscribe to changes on a Firebase Firestore collection
  * @param {Object} collection - Firebase Firestore collection reference
  */
-export default function useSubscribeCollection(
+export default function useSubscribeCollection<T>(
   collection: firebase.firestore.CollectionReference
 ): {
-  data: Record<string, unknown>;
+  data: T;
   error: Error | undefined;
 } {
   const [data, setData] = useState({});
