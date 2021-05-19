@@ -1,9 +1,6 @@
-/* eslint-disable functional/functional-parameters */
-/* eslint-disable functional/no-expression-statement */
-/* eslint-disable functional/no-conditional-statement */
-import firebase from 'firebase/app';
-import 'firebase/auth';
-import { useRouter } from 'next/router';
+import firebase from "firebase/app";
+import "firebase/auth";
+import { useRouter } from "next/router";
 import React, {
   createContext,
   ReactNode,
@@ -11,47 +8,47 @@ import React, {
   useContext,
   useEffect,
   useState,
-} from 'react';
+} from "react";
 
-// import { Effect } from './effect';
-import './init-firebase';
-import { mapUserData, User } from './map-user-data';
+import "./init-firebase";
+import { mapUserData, User } from "./map-user-data";
 import {
   getUserFromCookie,
   removeUserCookie,
   setUserCookie,
-} from './user-cookies';
+} from "./user-cookies";
 
 const empty = {
-  email: '',
-  displayName: '',
-  photoURL: '',
-  token: '',
-  uid: '',
+  email: "",
+  displayName: "",
+  photoURL: "",
+  token: "",
+  uid: "",
 };
 
 type Props = {
   readonly user: User;
   readonly initializing: boolean;
-  // readonly logout?: Promise;
+  readonly logout: () => Promise<void>;
 };
 
 export const Context = createContext<Props>({
   initializing: true,
   user: empty,
+  logout: () => Promise.reject("no user auth provider"),
 });
 
 export const Provider = ({
   children,
 }: {
   readonly children: ReactNode;
-}): JSX.Element => {
+}): JSX.Element | null => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<User>(empty);
   const router = useRouter();
 
   const logout = useCallback(async () => {
-    router.push('/auth');
+    router.push("/auth");
     await firebase.auth().signOut();
     setUser(empty);
   }, []);
@@ -69,7 +66,7 @@ export const Provider = ({
             setUserCookie.run(userData);
             setUser(userData);
           } else {
-            removeUserCookie.run('auth');
+            removeUserCookie.run("auth");
             setUser(empty);
           }
           setInitializing(false);
@@ -86,13 +83,13 @@ export const Provider = ({
     if (userFromCookie) {
       setUser(userFromCookie);
     } else {
-      router.push('/auth');
+      router.push("/auth");
     }
   });
 
-  // if (initializing) {
-  //   return null;
-  // }
+  if (initializing) {
+    return null;
+  }
 
   const context = {
     initializing,

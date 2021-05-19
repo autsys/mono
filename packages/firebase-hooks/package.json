@@ -3,8 +3,9 @@
   "version": "0.0.2",
   "description": "Firebase hooks that are used with @autsys/firebase functions.",
   "scripts": {
-    "build": "tsc"
+    "prepack": "tsc"
   },
+  "files": ["**/*.js", "**/*.d.ts"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"

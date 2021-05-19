@@ -5,12 +5,12 @@ import firebase from "firebase/app";
  */
 export default async function read(
   ref: firebase.firestore.CollectionReference
-): Promise<Record<string, unknown> | null> {
+): Promise<Record<string, Record<string, unknown>> | null> {
   return await ref.get().then(handleSuccess);
 }
 
 function handleSuccess(querySnapshot: firebase.firestore.QuerySnapshot) {
-  const result: Record<string, unknown> = {};
+  const result: Record<string, Record<string, unknown>> = {};
   querySnapshot.forEach((doc) => {
     const data = doc.data();
     result[doc.id] = data;
