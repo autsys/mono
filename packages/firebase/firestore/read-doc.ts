@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 /**
  * https://firebase.google.com/docs/firestore/quickstart#read_data
  * @param ref firestore reference
@@ -11,3 +11,5 @@ export async function read(
   const data = doc.data();
   return data;
 }
+
+export default read;

@@ -12,3 +12,5 @@ export async function call(
   const callable = functions.httpsCallable(name, options);
   return await callable(data);
 }
+
+export default call;
