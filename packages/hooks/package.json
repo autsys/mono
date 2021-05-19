@@ -1,11 +1,14 @@
 {
   "name": "@autsys/hooks",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Commonly used hooks",
   "scripts": {
     "prepack": "tsc"
   },
-  "files": ["**/*.js", "**/*.d.ts"],
+  "files": [
+    "**/*.js",
+    "**/*.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"

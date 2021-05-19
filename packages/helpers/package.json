@@ -1,11 +1,14 @@
 {
   "name": "@autsys/helpers",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Helper functions for various tasks",
   "scripts": {
     "prepack": "tsc"
   },
-  "files": ["**/*.js", "**/*.d.ts"],
+  "files": [
+    "**/*.js",
+    "**/*.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"

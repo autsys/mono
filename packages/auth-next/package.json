@@ -8,7 +8,10 @@
   "scripts": {
     "prepack": "tsc"
   },
-  "files": ["**/*.js", "**/*.d.ts"],
+  "files": [
+    "**/*.js",
+    "**/*.d.ts"
+  ],
   "dependencies": {
     "@bitauth/libauth": "^1.17.1",
     "js-cookie": "^2.2.1"

@@ -1,11 +1,14 @@
 {
   "name": "@autsys/firebase-functions",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Utility functions for Firebase Functions environment",
   "scripts": {
     "prepack": "tsc"
   },
-  "files": ["**/*.js", "**/*.d.ts"],
+  "files": [
+    "**/*.js",
+    "**/*.d.ts"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/autsys/mono.git"

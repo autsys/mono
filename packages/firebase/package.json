@@ -1,16 +1,22 @@
 {
   "name": "@autsys/firebase",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Commonly used Firebase functionality",
   "scripts": {
     "prepack": "tsc"
   },
-  "files": ["**/*.js", "**/*.d.ts", "!**/__tests__/**"],
+  "files": [
+    "**/*.js",
+    "**/*.d.ts",
+    "!**/__tests__/**"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/autsys/mono.git"
   },
-  "keywords": ["firebase"],
+  "keywords": [
+    "firebase"
+  ],
   "author": "jheyer159",
   "license": "ISC",
   "dependencies": {
