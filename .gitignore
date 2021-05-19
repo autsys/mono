@@ -4,4 +4,5 @@ dist
 tsconfig.tsbuildinfo
 *.js
 *.d.ts
+*.tgz
 
