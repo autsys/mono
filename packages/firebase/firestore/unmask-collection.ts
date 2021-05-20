@@ -1,4 +1,4 @@
-import renameKeys from './rename-keys';
+import renameKeys from "./rename-keys";
 /**
  * Unmask an object with short keys to full keys
  * Used to store data with minimal key (1 char)
@@ -14,7 +14,7 @@ export const unmaskCollection = (
   const object = Object.keys(data).map((id: string) => {
     const doc = data[id];
     const rekeyed = renameKeys(doc, keys);
-    return Object.assign({}, { id: { ...rekeyed } });
+    return Object.assign({}, { [id]: { ...rekeyed } });
   });
   const combined = Object.assign({}, ...object);
   return combined;
