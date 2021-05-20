@@ -6,7 +6,9 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "prepack": "tsc"
+    "build": "npm pack",
+    "prepack": "tsc",
+    "watch": "tsc -w"
   },
   "files": [
     "**/*.js",

@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Utility functions for Firebase Functions environment",
   "scripts": {
-    "prepack": "tsc"
+    "build": "npm pack",
+    "prepack": "tsc",
+    "watch": "tsc -w"
   },
   "files": [
     "**/*.js",

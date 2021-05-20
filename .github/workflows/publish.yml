@@ -22,7 +22,7 @@ jobs:
       - name: Update npm
         run: sudo npm i -g npm
       - name: Build
-        run: npm pack -ws
+        run: npm run build -ws
       # - name: Publish Hooks
       #   run: npm publish packages/hooks/dist
       # - name: Publish Firebase

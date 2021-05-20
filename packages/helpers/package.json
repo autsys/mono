@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Helper functions for various tasks",
   "scripts": {
-    "prepack": "tsc"
+    "build": "npm pack",
+    "prepack": "tsc",
+    "watch": "tsc -w"
   },
   "files": [
     "**/*.js",
