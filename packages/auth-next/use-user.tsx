@@ -40,15 +40,17 @@ export const Context = createContext<Props>({
 
 export const Provider = ({
   children,
+  route,
 }: {
   readonly children: ReactNode;
+  readonly route: string;
 }): JSX.Element | null => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<User>(empty);
   const router = useRouter();
 
   const logout = useCallback(async () => {
-    router.push("/auth");
+    router.push(route);
     await firebase.auth().signOut();
     setUser(empty);
   }, []);
@@ -83,10 +85,9 @@ export const Provider = ({
     if (userFromCookie) {
       setUser(userFromCookie);
     } else {
-      router.push("/auth");
+      router.push(route);
     }
-  });
-
+  }, []);
   if (initializing) {
     return null;
   }
