@@ -27,13 +27,13 @@ jobs:
       - name: Build Auth Next
         run: cd packages/auth-next && npm pack
       - name: Build Firebase
-        run: cd ../firebase && npm pack
+        run: cd packages/firebase && npm pack
       - name: Build Firebase Functions
-        run: cd ../firebase-functions && npm pack
+        run: cd packages/firebase-functions && npm pack
       - name: Build Firebase Hooks
-        run: cd ../helpers && npm pack
+        run: cd packages/helpers && npm pack
       - name: Build Hooks
-        run: cd ../hooks && npm pack
+        run: cd packages/hooks && npm pack
       # - name: Publish Hooks
       #   run: npm publish packages/hooks/dist
       # - name: Publish Firebase
