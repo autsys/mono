@@ -21,8 +21,19 @@ jobs:
         run: npm install --ignore-scripts
       - name: Update npm
         run: sudo npm i -g npm
-      - name: Build
-        run: cd packages/firebase && npm pack
+        # using -ws or -w commands are not working on CI, but they work locally
+        # if they eventually work on CI, then the following step can be simplified to
+        # npm pack -ws, but for now we cd into each package, then pack
+      - name: Build Auth Next
+        run: cd packages/auth-next && npm pack
+      - name: Build Firebase
+        run: cd ../firebase && npm pack
+      - name: Build Firebase Functions
+        run: cd ../firebase-functions && npm pack
+      - name: Build Firebase Hooks
+        run: cd ../helpers && npm pack
+      - name: Build Hooks
+        run: cd ../hooks && npm pack
       # - name: Publish Hooks
       #   run: npm publish packages/hooks/dist
       # - name: Publish Firebase
