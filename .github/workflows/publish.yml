@@ -25,16 +25,14 @@ jobs:
         # if they eventually work on CI, then the following step can be simplified to
         # npm pack -ws, but for now we cd into each package, then pack
       - name: Build Auth Next
-        run: cd packages/auth-next && npm pack
+        run: cd packages/auth-next && npm publish
       - name: Build Firebase
-        run: cd packages/firebase && npm pack
+        run: cd packages/firebase && npm publish
       - name: Build Firebase Functions
-        run: cd packages/firebase-functions && npm pack
+        run: cd packages/firebase-functions && npm publish
       - name: Build Firebase Hooks
-        run: cd packages/helpers && npm pack
+        run: cd packages/firebase-hooks && npm publish
+      - name: Build Helpers
+        run: cd packages/helpers && npm publish
       - name: Build Hooks
-        run: cd packages/hooks && npm pack
-      # - name: Publish Hooks
-      #   run: npm publish packages/hooks/dist
-      # - name: Publish Firebase
-      #   run: npm publish packages/firebase/dist
+        run: cd packages/hooks && npm publish
