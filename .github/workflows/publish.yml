@@ -1,11 +1,11 @@
-name: Package
+name: Package and Publish
 on:
   push:
     branches:
       - main
 jobs:
   build:
-    name: Build and Publish
+    name: Build
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -25,14 +25,60 @@ jobs:
         # if they eventually work on CI, then the following step can be simplified to
         # npm pack -ws, but for now we cd into each package, then pack
       - name: Build Auth Next
-        run: cd packages/auth-next && npm publish
+        run: cd packages/firebase-auth-next
       - name: Build Firebase
-        run: cd packages/firebase && npm publish
+        run: cd packages/firebase
       - name: Build Firebase Functions
-        run: cd packages/firebase-functions && npm publish
+        run: cd packages/firebase-functions
       - name: Build Firebase Hooks
-        run: cd packages/firebase-hooks && npm publish
+        run: cd packages/firebase-hooks
       - name: Build Helpers
-        run: cd packages/helpers && npm publish
+        run: cd packages/helpers
       - name: Build Hooks
-        run: cd packages/hooks && npm publish
+        run: cd packages/hooks
+  publish:
+    name: Publish to GitHub Package Registry
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
+    needs: build
+    strategy:
+      matrix:
+        {
+          dir:
+            [
+              packages/firebase-auth-next,
+              packages/firebase-functions,
+              firebase-hooks,
+              helpers,
+              hooks,
+            ],
+        }
+    defaults:
+      run:
+        working-directory: ${{matrix.dir}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        working-directory: ${{ matrix.dir }}
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+      - name: Set up Node.js for GPR
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v1
+        with:
+          registry-url: "https://npm.pkg.github.com/"
+          scope: "@autsys"
+      - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
+        if: steps.check.outputs.changed == 'true'
+        run: npm run gpr-setup
+      - name: Publish package to GPR
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
