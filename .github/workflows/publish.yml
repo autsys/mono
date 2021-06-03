@@ -42,17 +42,13 @@ jobs:
     if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
     needs: build
     strategy:
-      matrix:
-        {
-          dir:
-            [
+      matrix: { dir: [
               packages/firebase-auth-next,
-              packages/firebase-functions,
-              firebase-hooks,
-              helpers,
-              hooks,
-            ],
-        }
+              # packages/firebase-functions,
+              # packages/firebase-hooks,
+              # packages/helpers,
+              # packages/hooks,
+            ] }
     defaults:
       run:
         working-directory: ${{matrix.dir}}
@@ -62,23 +58,25 @@ jobs:
         with:
           ref: main
       - name: Check version changes
-        uses: EndBug/version-check@v1
+        uses: autsys/package-version
         id: check
-      - name: Version update detected
-        if: steps.check.outputs.changed == 'true'
-        working-directory: ${{ matrix.dir }}
-        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
-      - name: Set up Node.js for GPR
-        if: steps.check.outputs.changed == 'true'
-        uses: actions/setup-node@v1
         with:
-          registry-url: "https://npm.pkg.github.com/"
-          scope: "@autsys"
-      - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
-        if: steps.check.outputs.changed == 'true'
-        run: npm run gpr-setup
-      - name: Publish package to GPR
-        if: steps.check.outputs.changed == 'true'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          name: "firebase-auth-next"
+          owner: "@autsys"
+      - name: Version update detected
+        run: 'echo "Version detected! Version: ${{ steps.check.outputs.version }}"'
+      # - name: Set up Node.js for GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     registry-url: "https://npm.pkg.github.com/"
+      #     scope: "@autsys"
+      # - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   run: npm run gpr-setup
+      # - name: Publish package to GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
