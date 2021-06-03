@@ -58,7 +58,7 @@ jobs:
         with:
           ref: main
       - name: Check version changes
-        uses: "@autsys/package-version"
+        uses: "autsys/package-version@v0.0.1"
         id: check
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
