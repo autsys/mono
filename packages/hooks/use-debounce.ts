@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
  * @param delay - wait for ms
  * @returns returns the value after debounce time
  */
-export function useDebounce(value: unknown, delay: number) {
+export function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
   useEffect(() => {

@@ -11,8 +11,8 @@ export function init(): firebase.auth.Auth {
     9099;
   const isBrowser = typeof window !== "undefined";
   if (
-    (isBrowser && location?.hostname === "localhost") ||
-    location?.hostname === "127.0.0.1" ||
+    (isBrowser && location && location.hostname === "localhost") ||
+    (isBrowser && location && location.hostname === "127.0.0.1") ||
     process.env.FIREBASE_AUTH_EMULATOR === "true"
   ) {
     auth.useEmulator(`${host}:${port}`);

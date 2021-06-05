@@ -1,10 +1,10 @@
 {
   "name": "@autsys/firebase",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Commonly used Firebase functionality",
   "scripts": {
-    "build": "npm pack",
     "prepack": "tsc",
+    "build": "npm pack",
     "watch": "tsc -w"
   },
   "files": [
@@ -28,6 +28,6 @@
     "@types/whatwg-url": "^8.2.0"
   },
   "peerDependencies": {
-    "firebase": "^8.4.3"
+    "firebase": "^8.6.3"
   }
 }

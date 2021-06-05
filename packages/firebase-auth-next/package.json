@@ -1,6 +1,6 @@
 {
   "name": "@autsys/firebase-auth-next",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Link between Firebase Authentication, React hooks, Next.js for handling user authentication within pages.",
   "repository": "https://github.com/autsys/mono.git",
   "license": "MIT",

@@ -2,12 +2,13 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 
 export const firestore = firebase.firestore();
+console.log(`[Firebase] - Firestore initialized`);
 
 const useEmulator = (host: string, port: number) => {
   const isBrowser = typeof window !== "undefined";
   if (
-    (isBrowser && location?.hostname === "localhost") ||
-    location.hostname === "127.0.0.1" ||
+    (isBrowser && location && location.hostname === "localhost") ||
+    (isBrowser && location && location.hostname === "127.0.0.1") ||
     process.env.FIREBASE_FIRESTORE_EMULATOR === "true"
   ) {
     firestore.useEmulator(host, port);

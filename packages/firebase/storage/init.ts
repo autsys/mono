@@ -12,8 +12,8 @@ export function init(): firebase.storage.Storage {
     9199;
   const isBrowser = typeof window !== "undefined";
   if (
-    (isBrowser && location?.hostname === "localhost") ||
-    location.hostname === "127.0.0.1" ||
+    (isBrowser && location && location.hostname === "localhost") ||
+    (isBrowser && location && location.hostname === "127.0.0.1") ||
     process.env.FIREBASE_STORAGE_EMULATOR === "true"
   ) {
     console.log("[Firebase] - Storage initialized: ", host + ":" + port);

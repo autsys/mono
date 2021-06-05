@@ -11,8 +11,8 @@ function init(): firebase.functions.Functions {
     5001;
   const isBrowser = typeof window !== "undefined";
   if (
-    (isBrowser && location?.hostname === "localhost") ||
-    location?.hostname === "127.0.0.1" ||
+    (isBrowser && location && location.hostname === "localhost") ||
+    (isBrowser && location && location.hostname === "127.0.0.1") ||
     process.env.FIREBASE_FUNCTIONS_EMULATOR === "true"
   ) {
     functions.useEmulator(host, port);
