@@ -1,41 +1,12 @@
-name: Package
+name: Package and Publish
 on:
   push:
     branches:
       - main
 jobs:
-  install:
-    name: Install
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 12
-          registry-url: "https://npm.pkg.github.com"
-      - name: Install dependencies
-        run: npm install --ignore-scripts
   build:
-    name: Build and Publish
+    name: Build
     runs-on: ubuntu-latest
-    needs: install
-    strategy:
-      matrix:
-        {
-          dir:
-            [
-              packages/firebase-auth-next,
-              packages/firebase-functions,
-              packages/firebase-hooks,
-              packages/helpers,
-              packages/hooks,
-            ],
-        }
-    defaults:
-      run:
-        working-directory: ${{matrix.dir}}
     env:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -44,7 +15,69 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 12
+          node-version: 15
           registry-url: "https://npm.pkg.github.com"
-      - name: Build
-        run: npm publish
+      - name: Install dependencies
+        run: npm install --ignore-scripts
+      - name: Update npm
+        run: sudo npm i -g npm
+        # using -ws or -w commands are not working on CI, but they work locally
+        # if they eventually work on CI, then the following step can be simplified to
+        # npm pack -ws, but for now we cd into each package, then pack
+      - name: Build Auth Next
+        run: cd packages/firebase-auth-next
+      - name: Build Firebase
+        run: cd packages/firebase
+      - name: Build Firebase Functions
+        run: cd packages/firebase-functions
+      - name: Build Firebase Hooks
+        run: cd packages/firebase-hooks
+      - name: Build Helpers
+        run: cd packages/helpers
+      - name: Build Hooks
+        run: cd packages/hooks
+  publish:
+    name: Publish to GitHub Package Registry
+    runs-on: ubuntu-latest
+    if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
+    needs: build
+    strategy:
+      matrix: { dir: [
+              packages/firebase-auth-next,
+              # packages/firebase-functions,
+              # packages/firebase-hooks,
+              # packages/helpers,
+              # packages/hooks,
+            ] }
+    defaults:
+      run:
+        working-directory: ${{matrix.dir}}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: main
+      - name: Check version changes
+        uses: "autsys/package-version@v0.0.2"
+        id: check
+        with:
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          owner: "@autsys"
+          repo: mono
+          name: "firebase-auth-next"
+      - name: Version update detected
+        run: 'echo "Version detected! Version: ${{ steps.check.outputs.version }}"'
+      # - name: Set up Node.js for GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     registry-url: "https://npm.pkg.github.com/"
+      #     scope: "@autsys"
+      # - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   run: npm run gpr-setup
+      # - name: Publish package to GPR
+      #   if: steps.check.outputs.changed == 'true'
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
