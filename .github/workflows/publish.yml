@@ -7,6 +7,21 @@ jobs:
   build:
     name: Build and Publish
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        {
+          dir:
+            [
+              packages/firebase-auth-next,
+              packages/firebase-functions,
+              packages/firebase-hooks,
+              packages/helpers,
+              packages/hooks,
+            ],
+        }
+    defaults:
+      run:
+        working-directory: ${{matrix.dir}}
     env:
       NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -15,24 +30,11 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: 15
+          node-version: 12
           registry-url: "https://npm.pkg.github.com"
       - name: Install dependencies
         run: npm install --ignore-scripts
       - name: Update npm
         run: sudo npm i -g npm
-        # using -ws or -w commands are not working on CI, but they work locally
-        # if they eventually work on CI, then the following step can be simplified to
-        # npm pack -ws, but for now we cd into each package, then pack
-      - name: Build Auth Next
-        run: cd packages/firebase-auth-next && npm publish
-      - name: Build Firebase
-        run: cd packages/firebase && npm publish
-      - name: Build Firebase Functions
-        run: cd packages/firebase-functions && npm publish
-      - name: Build Firebase Hooks
-        run: cd packages/firebase-hooks && npm publish
-      - name: Build Helpers
-        run: cd packages/helpers && npm publish
-      - name: Build Hooks
-        run: cd packages/hooks && npm publish
+      - name: Build
+        run: npm publish
