@@ -63,7 +63,7 @@ jobs:
         with:
           path: ${{matrix.dir}}
       - name: Check version changes
-        uses: autsys/package-version@v0.0.6
+        uses: autsys/package-version@v0.0.7
         id: check
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
