@@ -58,21 +58,27 @@ jobs:
         with:
           ref: main
       - name: Get Current Version
-        id: version
+        id: current
         uses: martinbeentjes/npm-get-version-action@v1.1.0
         with:
           path: ${{matrix.dir}}
       - name: Check version changes
-        uses: autsys/package-version@v0.0.7
-        id: check
+        uses: autsys/package-version@v0.0.8
+        id: latest
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           owner: autsys
           repo: mono
           name: firebase-auth-next
           debug: true
-      - name: Version update detected
-        run: 'echo "Version detected! Version: ${{ steps.check.outputs.version }}"'
+      - name: Versions detected
+        run: 'echo "Version detected! Current: ${{ steps.current.outputs.version }}" Latest: ${{ steps.latest.outputs.version}}'
+      - name: Compare Semver
+        id: compare
+        uses: autsys/semver@v0.0.1
+        with:
+          a: ${{ steps.latest.outputs.version }}
+          b: ${{ steps.current.outputs.version }}
       # - name: Set up Node.js for GPR
       #   if: steps.check.outputs.changed == 'true'
       #   uses: actions/setup-node@v1
