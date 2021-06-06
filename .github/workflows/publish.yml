@@ -1,4 +1,4 @@
-name: Package and Publish
+name: Build and Publish
 on:
   push:
     branches:
@@ -8,7 +8,6 @@ jobs:
     name: Build and Publish to GitHub Package Registry
     runs-on: ubuntu-latest
     if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
-    needs: build
     strategy:
       matrix:
         {
@@ -62,6 +61,7 @@ jobs:
       #   if: steps.check.outputs.changed == 'true'
       #   run: npm run gpr-setup
       - name: Install dependencies
+        if: steps.compare.outputs.gt == 'true'
         run: npm install --ignore-scripts
       - name: Publish package to GPR
         if: steps.compare.outputs.gt == 'true'
