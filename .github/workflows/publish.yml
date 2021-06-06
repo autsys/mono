@@ -42,13 +42,17 @@ jobs:
     if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
     needs: build
     strategy:
-      matrix: { dir: [
+      matrix:
+        {
+          dir:
+            [
               packages/firebase-auth-next,
-              # packages/firebase-functions,
-              # packages/firebase-hooks,
-              # packages/helpers,
-              # packages/hooks,
-            ] }
+              packages/firebase-functions,
+              packages/firebase-hooks,
+              packages/helpers,
+              packages/hooks,
+            ],
+        }
     defaults:
       run:
         working-directory: ${{matrix.dir}}
