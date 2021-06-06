@@ -1,5 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "exclude": ["**/*.spec.ts"],
-  "include": ["firestore/**/*.ts", "functions/**/*.ts", "storage/**/*.ts"]
+  "include": [
+    "firestore/**/*.ts",
+    "functions/**/*.ts",
+    "storage/**/*.ts",
+    "auth/**/*.ts",
+    "next/**/*.ts"
+  ]
 }
