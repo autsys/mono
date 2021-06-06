@@ -75,7 +75,7 @@ jobs:
         run: 'echo "Version detected! Current: ${{ steps.current.outputs.current-version }}" Latest: ${{ steps.latest.outputs.version}}'
       - name: Compare Semantic Version
         id: compare
-        uses: autsys/semver@v0.0.3
+        uses: autsys/semver@v0.0.4
         with:
           a: ${{ steps.current.outputs.version }}
           b: ${{ steps.latest.outputs.version }}
