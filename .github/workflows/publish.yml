@@ -63,13 +63,14 @@ jobs:
         with:
           path: ${{matrix.dir}}
       - name: Check version changes
-        uses: "autsys/package-version@v0.0.6"
+        uses: autsys/package-version@v0.0.6
         id: check
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
-          owner: "autsys"
+          owner: autsys
           repo: mono
           name: firebase-auth-next
+          debug: true
       - name: Version update detected
         run: 'echo "Version detected! Version: ${{ steps.check.outputs.version }}"'
       # - name: Set up Node.js for GPR
