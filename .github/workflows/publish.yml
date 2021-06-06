@@ -63,7 +63,7 @@ jobs:
         with:
           path: ${{matrix.dir}}
       - name: Check version changes
-        uses: autsys/package-version@v0.0.8
+        uses: autsys/package-version@v0.0.9
         id: latest
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
@@ -75,7 +75,7 @@ jobs:
         run: 'echo "Version detected! Current: ${{ steps.current.outputs.version }}" Latest: ${{ steps.latest.outputs.version}}'
       - name: Compare Semantic Version
         id: compare
-        uses: autsys/semver@v0.0.2
+        uses: autsys/semver@v0.0.3
         with:
           a: ${{ steps.current.outputs.version }}
           b: ${{ steps.latest.outputs.version }}
