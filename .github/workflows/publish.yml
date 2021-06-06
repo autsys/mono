@@ -13,6 +13,7 @@ jobs:
         {
           dir:
             [
+              firebase,
               firebase-auth-next,
               firebase-functions,
               firebase-hooks,
