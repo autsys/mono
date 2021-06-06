@@ -46,16 +46,16 @@ jobs:
         {
           dir:
             [
-              packages/firebase-auth-next,
-              packages/firebase-functions,
-              packages/firebase-hooks,
-              packages/helpers,
-              packages/hooks,
+              firebase-auth-next,
+              firebase-functions,
+              firebase-hooks,
+              helpers,
+              hooks,
             ],
         }
     defaults:
       run:
-        working-directory: ${{matrix.dir}}
+        working-directory: "packages/${{matrix.dir}}"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -65,7 +65,7 @@ jobs:
         id: current
         uses: martinbeentjes/npm-get-version-action@v1.1.0
         with:
-          path: ${{matrix.dir}}
+          path: "packages/${{matrix.dir}}"
       - name: Check version changes
         uses: autsys/package-version@v0.0.9
         id: latest
@@ -73,7 +73,7 @@ jobs:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
           owner: autsys
           repo: mono
-          name: firebase-auth-next
+          name: ${{matrix.dir}}
           debug: true
       - name: Versions detected
         run: 'echo "Version detected! Current: ${{ steps.current.outputs.current-version }}" Latest: ${{ steps.latest.outputs.version}}'
