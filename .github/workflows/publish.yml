@@ -62,7 +62,7 @@ jobs:
         id: check
         with:
           accessToken: ${{ secrets.GITHUB_TOKEN }}
-          owner: "@autsys"
+          owner: "autsys"
           repo: mono
           name: firebase-auth-next
       - name: Version update detected
