@@ -5,39 +5,7 @@ on:
       - main
 jobs:
   build:
-    name: Build
-    runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 15
-          registry-url: "https://npm.pkg.github.com"
-      - name: Install dependencies
-        run: npm install --ignore-scripts
-      - name: Update npm
-        run: sudo npm i -g npm
-        # using -ws or -w commands are not working on CI, but they work locally
-        # if they eventually work on CI, then the following step can be simplified to
-        # npm pack -ws, but for now we cd into each package, then pack
-      - name: Build Auth Next
-        run: cd packages/firebase-auth-next
-      - name: Build Firebase
-        run: cd packages/firebase
-      - name: Build Firebase Functions
-        run: cd packages/firebase-functions
-      - name: Build Firebase Hooks
-        run: cd packages/firebase-hooks
-      - name: Build Helpers
-        run: cd packages/helpers
-      - name: Build Hooks
-        run: cd packages/hooks
-  publish:
-    name: Publish to GitHub Package Registry
+    name: Build and Publish to GitHub Package Registry
     runs-on: ubuntu-latest
     if: contains(github.ref, 'main') # Publish it only if the push comes from the master branch
     needs: build
@@ -87,11 +55,14 @@ jobs:
         if: steps.compare.outputs.gt == 'true'
         uses: actions/setup-node@v2
         with:
+          node-version: 15
           registry-url: "https://npm.pkg.github.com/"
           scope: "@autsys"
       # - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
       #   if: steps.check.outputs.changed == 'true'
       #   run: npm run gpr-setup
+      - name: Install dependencies
+        run: npm install --ignore-scripts
       - name: Publish package to GPR
         if: steps.compare.outputs.gt == 'true'
         run: npm publish
