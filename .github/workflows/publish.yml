@@ -72,7 +72,7 @@ jobs:
           name: firebase-auth-next
           debug: true
       - name: Versions detected
-        run: 'echo "Version detected! Current: ${{ steps.current.outputs.version }}" Latest: ${{ steps.latest.outputs.version}}'
+        run: 'echo "Version detected! Current: ${{ steps.current.outputs.current-version }}" Latest: ${{ steps.latest.outputs.version}}'
       - name: Compare Semantic Version
         id: compare
         uses: autsys/semver@v0.0.3
