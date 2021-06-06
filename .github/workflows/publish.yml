@@ -73,23 +73,23 @@ jobs:
           debug: true
       - name: Versions detected
         run: 'echo "Version detected! Current: ${{ steps.current.outputs.version }}" Latest: ${{ steps.latest.outputs.version}}'
-      - name: Compare Semver
+      - name: Compare Semantic Version
         id: compare
-        uses: autsys/semver@v0.0.1
+        uses: autsys/semver@v0.0.2
         with:
-          a: ${{ steps.latest.outputs.version }}
-          b: ${{ steps.current.outputs.version }}
-      # - name: Set up Node.js for GPR
-      #   if: steps.check.outputs.changed == 'true'
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     registry-url: "https://npm.pkg.github.com/"
-      #     scope: "@autsys"
+          a: ${{ steps.current.outputs.version }}
+          b: ${{ steps.latest.outputs.version }}
+      - name: Set up Node.js for GPR
+        if: steps.compare.outputs.changed == 'true'
+        uses: actions/setup-node@v2
+        with:
+          registry-url: "https://npm.pkg.github.com/"
+          scope: "@autsys"
       # - name: Set up package for GPR # You need to make sure you package name has the scope needed for GPR
       #   if: steps.check.outputs.changed == 'true'
       #   run: npm run gpr-setup
-      # - name: Publish package to GPR
-      #   if: steps.check.outputs.changed == 'true'
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish package to GPR
+        if: steps.compare.outputs.changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
