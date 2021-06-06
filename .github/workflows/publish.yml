@@ -62,6 +62,7 @@ jobs:
       #   run: npm run gpr-setup
       - name: Install dependencies
         if: steps.compare.outputs.gt == 'true'
+        working-directory: .
         run: npm install --ignore-scripts
       - name: Publish package to GPR
         if: steps.compare.outputs.gt == 'true'
