@@ -77,10 +77,10 @@ jobs:
         id: compare
         uses: autsys/semver@v0.0.5
         with:
-          a: ${{ steps.current.outputs.version }}
+          a: ${{ steps.current.outputs.current-version }}
           b: ${{ steps.latest.outputs.version }}
       - name: Set up Node.js for GPR
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.compare.outputs.gt == 'true'
         uses: actions/setup-node@v2
         with:
           registry-url: "https://npm.pkg.github.com/"
@@ -89,7 +89,7 @@ jobs:
       #   if: steps.check.outputs.changed == 'true'
       #   run: npm run gpr-setup
       - name: Publish package to GPR
-        if: steps.compare.outputs.changed == 'true'
+        if: steps.compare.outputs.gt == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
