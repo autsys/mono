@@ -1,15 +1,19 @@
-import firebase from "firebase/app";
+import {
+  CollectionReference,
+  getDocs,
+  QuerySnapshot,
+} from "firebase/firestore";
 /**
  * https://firebase.google.com/docs/firestore/quickstart#read_data
- * @param {object} ref firestore reference
+ * @param ref firestore collection reference
  */
 export default async function read(
-  ref: firebase.firestore.CollectionReference
+  ref: CollectionReference
 ): Promise<Record<string, Record<string, unknown>> | null> {
-  return await ref.get().then(handleSuccess);
+  return await getDocs(ref).then(handleSuccess);
 }
 
-function handleSuccess(querySnapshot: firebase.firestore.QuerySnapshot) {
+function handleSuccess(querySnapshot: QuerySnapshot) {
   const result: Record<string, Record<string, unknown>> = {};
   querySnapshot.forEach((doc) => {
     const data = doc.data();

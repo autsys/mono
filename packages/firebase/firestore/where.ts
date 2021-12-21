@@ -1,26 +1,28 @@
-import firebase from "firebase/app";
+import {
+  CollectionReference,
+  FieldPath,
+  getDocs,
+  query,
+  QuerySnapshot,
+  where as w,
+  WhereFilterOp,
+} from "firebase/firestore";
 /**
  * Perform a simple query on a Firestore reference
- * @param {object} ref firestore reference
- * @param {array} query array of strings to use for query
- * @returns {Object|null} Object with results {docId: docData} or null
+ * @param ref firestore reference
+ * @param query array of values to use for query
+ * @returns Object with results {docId: docData} or null
  * https://firebase.google.com/docs/firestore/query-data/queries#simple_queries
  */
-export default function where(
-  ref: firebase.firestore.CollectionReference,
-  query: [
-    string | firebase.firestore.FieldPath,
-    firebase.firestore.WhereFilterOp,
-    unknown
-  ]
+export default async function where(
+  ref: CollectionReference,
+  qs: [string | FieldPath, WhereFilterOp, unknown]
 ): Promise<Record<string, Record<string, unknown>> | null> {
-  return ref
-    .where(...query)
-    .get()
-    .then(handleSuccess);
+  const q = query(ref, w(...qs));
+  return await getDocs(q).then(handleSuccess);
 }
 
-function handleSuccess(querySnapshot: firebase.firestore.QuerySnapshot) {
+function handleSuccess(querySnapshot: QuerySnapshot) {
   const result: Record<string, Record<string, unknown>> = {};
   querySnapshot.forEach(function (doc) {
     const data = doc.data();

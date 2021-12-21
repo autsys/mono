@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import { CollectionReference, deleteDoc, doc } from "firebase/firestore";
 /**
  * Remove each document in the given array.
  * @param ref firestore reference
@@ -6,16 +6,16 @@ import firebase from "firebase/app";
  * @returns {object} {results, errors}
  */
 export default async function deleteEach(
-  ref: firebase.firestore.CollectionReference,
+  ref: CollectionReference,
   docs: string[]
 ): Promise<{
-  errors: Error[];
+  errors: unknown[];
 }> {
-  const errors: Error[] = [];
+  const errors: unknown[] = [];
   await Promise.all(
     docs.map(async (id) => {
       try {
-        return await ref.doc(id).delete();
+        return await deleteDoc(doc(ref, id));
       } catch (err) {
         errors.push(err);
       }

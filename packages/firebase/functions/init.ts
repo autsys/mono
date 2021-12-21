@@ -1,24 +1,14 @@
-import firebase from "firebase/app";
-import "firebase/functions";
+import { connectFunctionsEmulator, Functions } from "firebase/functions";
 
-export const functions = firebase.functions();
-
-function init(): firebase.functions.Functions {
-  const host = process.env.FIREBASE_FUNCTIONS_HOST || "localhost"; //this will set Functions to connect to local emulator
-  const port =
-    (process.env.FIREBASE_FUNCTIONS_PORT &&
-      parseInt(process.env.FIREBASE_FUNCTIONS_PORT)) ||
-    5001;
+export function init(functions: Functions, host: string, port: number): void {
   const isBrowser = typeof window !== "undefined";
-  if (
-    (isBrowser && location && location.hostname === "localhost") ||
-    (isBrowser && location && location.hostname === "127.0.0.1") ||
-    process.env.FIREBASE_FUNCTIONS_EMULATOR === "true"
-  ) {
-    functions.useEmulator(host, port);
+  if (isBrowser && process.env.FIREBASE_FUNCTIONS_EMULATOR === "true") {
+    connectFunctionsEmulator(functions, host, port);
+    console.log(
+      "[Firebase] - Functions emulator connected: ",
+      host + ":" + port
+    );
   }
-  console.log("[Firebase] - Functions initialized: ", host + ":" + port);
-  return functions;
 }
 
 export default init;

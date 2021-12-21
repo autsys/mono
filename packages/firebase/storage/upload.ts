@@ -1,6 +1,10 @@
-import firebase from "firebase/app";
-
-import uploadComplete from "./upload-complete";
+import {
+  getDownloadURL,
+  StorageReference,
+  uploadBytesResumable,
+  UploadMetadata,
+  UploadTaskSnapshot,
+} from "firebase/storage";
 
 /**
  * Async upload to Firebase storage
@@ -12,16 +16,16 @@ import uploadComplete from "./upload-complete";
  * @returns Promise that resolves on success / rejects on error
  */
 export const upload = async (
-  ref: firebase.storage.Reference,
+  ref: StorageReference,
   file: Blob | Uint8Array | ArrayBuffer,
-  metadata?: firebase.storage.UploadMetadata,
-  onChange?: (snapshot: firebase.storage.UploadTaskSnapshot) => void
+  metadata?: UploadMetadata,
+  onChange?: (snapshot: UploadTaskSnapshot) => void
 ): Promise<string> =>
   new Promise<string>((resolve, reject) => {
     const md = {
       cacheControl: "no-cache, max-age=29030400",
     };
-    const uploadTask = ref.put(file, metadata || md);
+    const uploadTask = uploadBytesResumable(ref, file, metadata || md);
     uploadTask.on(
       "state_changed",
       onChange || null,
@@ -30,7 +34,7 @@ export const upload = async (
         reject("Failed to upload file");
       },
       async () => {
-        const url = await uploadComplete(uploadTask);
+        const url = await getDownloadURL(uploadTask.snapshot.ref);
         resolve(url);
       }
     );

@@ -1,41 +1,23 @@
-import firebase from "firebase/app";
-import "firebase/firestore";
-
-export const firestore = firebase.firestore();
-console.log(`[Firebase] - Firestore initialized`);
-
-const useEmulator = (host: string, port: number) => {
-  const isBrowser = typeof window !== "undefined";
-  if (
-    (isBrowser && location && location.hostname === "localhost") ||
-    (isBrowser && location && location.hostname === "127.0.0.1") ||
-    process.env.FIREBASE_FIRESTORE_EMULATOR === "true"
-  ) {
-    firestore.useEmulator(host, port);
-  }
-};
+import {
+  connectFirestoreEmulator,
+  EmulatorMockTokenOptions,
+  Firestore,
+} from "firebase/firestore";
 
 export const init = (
-  settings?: firebase.firestore.Settings
-): firebase.firestore.Firestore => {
-  if (settings) {
-    firestore.settings(settings);
-    console.log(`[Firebase] - Firestore initialized: ${settings}`);
-  } else {
-    // env only has strings
-    const host = process.env.FIREBASE_FIRESTORE_HOST || "localhost";
-    const port =
-      (process.env.FIREBASE_FIRESTORE_PORT &&
-        parseInt(process.env.FIREBASE_FIRESTORE_PORT)) ||
-      9001;
-    firestore.settings({
-      host: `${host}:${port}`,
-      ssl: false,
-    });
-    useEmulator(host, port);
-    console.log(`[Firebase] - Firestore initialized: ${host}:${port}`);
+  firestore: Firestore,
+  host: string,
+  port: number,
+  options?:
+    | { mockUserToken?: string | EmulatorMockTokenOptions | undefined }
+    | undefined
+): void => {
+  // env only has strings
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser && process.env.FIREBASE_FIRESTORE_EMULATOR === "true") {
+    isBrowser && connectFirestoreEmulator(firestore, host, port, options);
+    console.log(`[Firebase] - Firestore emulator connected: ${host}:${port}`);
   }
-  return firestore;
 };
 
 export default init;

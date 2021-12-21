@@ -1,24 +1,15 @@
-import firebase from "firebase/app";
-import "firebase/auth";
+import { Auth, connectAuthEmulator } from "firebase/auth";
 
-export const auth = firebase.auth();
-
-export function init(): firebase.auth.Auth {
-  const host = process.env.FIREBASE_AUTH_HOST || "localhost";
-  const port =
-    (process.env.FIREBASE_AUTH_PORT &&
-      parseInt(process.env.FIREBASE_AUTH_PORT)) ||
-    9099;
+export function init(
+  auth: Auth,
+  url: string,
+  options?: { disableWarnings: boolean } | undefined
+): void {
   const isBrowser = typeof window !== "undefined";
-  if (
-    (isBrowser && location && location.hostname === "localhost") ||
-    (isBrowser && location && location.hostname === "127.0.0.1") ||
-    process.env.FIREBASE_AUTH_EMULATOR === "true"
-  ) {
-    auth.useEmulator(`${host}:${port}`);
+  if (isBrowser && process.env.FIREBASE_AUTH_EMULATOR === "true") {
+    connectAuthEmulator(auth, url, options);
+    console.log("[Firebase] - Auth emulator connected: ", url);
   }
-  console.log("[Firebase] - Auth initialized: ", host + ":" + port);
-  return auth;
 }
 
 export default init;
