@@ -1,4 +1,9 @@
-import firebase from "firebase/app";
+import {
+  CollectionReference,
+  DocumentData,
+  onSnapshot,
+  QuerySnapshot,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 type Nested<T> = Record<string, Record<string, T>>;
@@ -7,7 +12,7 @@ type Nested<T> = Record<string, Record<string, T>>;
  * @param {Object} collection - Firebase Firestore collection reference
  */
 export default function useSubscribeCollection<T>(
-  collection: firebase.firestore.CollectionReference
+  collection: CollectionReference
 ): {
   data: Nested<T>;
   error: Error | undefined;
@@ -19,14 +24,12 @@ export default function useSubscribeCollection<T>(
     const onFailure = (err: Error) => {
       setError(err);
     };
-    const onSuccess = (
-      snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>
-    ) => {
+    const onSuccess = (snapshot: QuerySnapshot<DocumentData>) => {
       const results: Nested<T> = {};
       snapshot.docs.forEach((doc) => (results[doc.id] = doc.data()));
       setData(results);
     };
-    const unsubscribe = collection.onSnapshot(onSuccess, onFailure);
+    const unsubscribe = onSnapshot(collection, onSuccess, onFailure);
     return () => unsubscribe();
   }, [collection]);
 
