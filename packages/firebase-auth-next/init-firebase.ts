@@ -1,4 +1,4 @@
-import firebase from "firebase/app";
+import { initializeApp } from "firebase/app";
 import "firebase/auth";
 
 const config = {
@@ -9,5 +9,6 @@ const config = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
 };
 
+initializeApp(config);
+
 console.log("[Firebase] - initializing with config: ", config);
-export const app = !firebase.apps.length && firebase.initializeApp(config);
