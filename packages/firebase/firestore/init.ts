@@ -15,8 +15,14 @@ export const init = (
   // env only has strings
   const isBrowser = typeof window !== "undefined";
   if (isBrowser && process.env.FIREBASE_FIRESTORE_EMULATOR === "true") {
+    console.log("[Firebase] - Firestore connecting:", {
+      firestore,
+      host,
+      port,
+      options,
+    });
     isBrowser && connectFirestoreEmulator(firestore, host, port, options);
-    console.log(`[Firebase] - Firestore emulator connected: ${host}:${port}`);
+    console.log("[Firebase] - Firestore connected");
   }
 };
 

@@ -7,8 +7,9 @@ export function init(
 ): void {
   const isBrowser = typeof window !== "undefined";
   if (isBrowser && process.env.FIREBASE_STORAGE_EMULATOR === "true") {
+    console.log("[Firebase] - Storage connecting", { storage, host, port });
     connectStorageEmulator(storage, host, port);
-    console.log("[Firebase] - Storage emulator connected: ", host + ":" + port);
+    console.log("[Firebase] - Storage connected");
   }
 }
 
