@@ -1,5 +1,5 @@
 import { FirebaseApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+import { getAuth, onIdTokenChanged, signOut, User } from "firebase/auth";
 import React, {
   createContext,
   ReactNode,
@@ -8,8 +8,6 @@ import React, {
   useEffect,
   useState,
 } from "react";
-
-import "./init-firebase";
 
 type Props = {
   readonly user?: User;
@@ -44,25 +42,24 @@ export const Provider = ({
     // Firebase updates the id token every hour, this
     // makes sure the react state and the cookie are
     // both kept up to date
-    if (initializing) {
-      const cancelAuthListener = onAuthStateChanged(auth, (user) => {
+    const cancelAuthListener = onIdTokenChanged(
+      auth,
+      (user) => {
         if (user) {
           setUser(user);
         } else {
           setUser(undefined);
         }
         setInitializing(false);
-      });
-      return () => {
-        cancelAuthListener();
-      };
-    }
-    return;
-  }, [initializing]);
-
-  if (initializing) {
-    return null;
-  }
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+    return () => {
+      cancelAuthListener();
+    };
+  }, []);
 
   const context = {
     initializing,
