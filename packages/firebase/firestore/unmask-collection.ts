@@ -7,10 +7,10 @@ import renameKeys from "./rename-keys";
  * @param data - object of data objects (docs) to transform
  * @returns same objects with full keys
  */
-export const unmaskCollection = (
+export function unmaskCollection<T extends Record<string, unknown>>(
   keys: Record<string, string>,
   data: Record<string, Record<string, unknown>>
-): Record<string, Record<string, unknown>> => {
+): Record<string, T> {
   const object = Object.keys(data).map((id: string) => {
     const doc = data[id];
     const rekeyed = renameKeys(doc, keys);
@@ -18,4 +18,4 @@ export const unmaskCollection = (
   });
   const combined = Object.assign({}, ...object);
   return combined;
-};
+}
