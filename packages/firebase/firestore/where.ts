@@ -22,7 +22,7 @@ export default async function where(
   return await getDocs(q).then(handleSuccess);
 }
 
-function handleSuccess(querySnapshot: QuerySnapshot) {
+export function handleSuccess(querySnapshot: QuerySnapshot) {
   const result: Record<string, Record<string, unknown>> = {};
   querySnapshot.forEach(function (doc) {
     const data = doc.data();
